@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "enterprise-copilot": {
+      "command": "copilot-mcp",
+      "env": {
+        "COPILOT_API_URL": "http://127.0.0.1:8000",
+        "COPILOT_MCP_TOKEN": "demo-reader-change-me"
+      }
+    }
+  }
+}

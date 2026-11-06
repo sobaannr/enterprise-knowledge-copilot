@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "corpus_sha256": "d6166d1cffbe3ce18159516c3d6ce79018b4df8a245c3725ac3e9569ef263878",
+  "created_at": "2026-11-06T19:05:46.530798+00:00",
+  "elapsed_ms": 150.58,
+  "configuration": {
+    "retrieval": "local",
+    "generation": "extractive",
+    "generation_model": "gemini-3.8-flash",
+    "embedding_model": "gemini-embedding-001"
+  },
+  "dataset_sha256": "cf8e0a48fa16c1116b9d7dc902a63d51f46dac0028d2971dd4c6fd3b05e62733",
+  "thresholds": {
+    "workflow_accuracy": 1.0,
+    "retrieval_recall_at_3": 1.0
+  },
+  "workflow_accuracy": 1.0,
+  "precision_at_3": 0.3333333333333333,
+  "ndcg_at_3": 0.9285714285714286,
+  "passed": true,
+  "workflow_cases": [
+    {
+      "question": "Which enterprise customers were affected by last week's login incident?",
+      "passed": true,
+      "citation_coverage": 1.0
+    },
+    {
+      "question": "Prepare follow-up tickets for INC-1042",
+      "passed": true,
+      "citation_coverage": 1.0
+    },
+    {
+      "question": "What is our office lunch menu?",
+      "passed": true,
+      "citation_coverage": null
+    },
+    {
+      "question": "Analyze INC-9999",
+      "passed": true,
+      "citation_coverage": null
+    }
+  ],
+  "retrieval_cases": [
+    {
+      "query": "approved SAML recovery metadata procedure",
+      "hit_at_3": true,
+      "retrieved_ids": [
+        "KB-208",
+        "SUP-442",
+        "SUP-441"
+      ],
+      "expected_document": "KB-208",
+      "precision_at_3": 0.3333333333333333,
+      "ndcg_at_3": 1.0,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "query": "customer follow-up policy approval",
+      "hit_at_3": true,
+      "retrieved_ids": [
+        "POL-12",
+        "INC-1042"
+      ],
+      "expected_document": "POL-12",
+      "precision_at_3": 0.3333333333333333,
+      "ndcg_at_3": 1.0,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "query": "API rate limits quota",
+      "hit_at_3": true,
+      "retrieved_ids": [
+        "KB-301"
+      ],
+      "expected_document": "KB-301",
+      "precision_at_3": 0.3333333333333333,
+      "ndcg_at_3": 1.0,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "query": "SAML metadata recovery",
+      "hit_at_3": true,
+      "retrieved_ids": [
+        "KB-208",
+        "SUP-442",
+        "SUP-441"
+      ],
+      "expected_document": "KB-208",
+      "precision_at_3": 0.3333333333333333,
+      "ndcg_at_3": 1.0,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "query": "approved workaround authentication",
+      "hit_at_3": true,
+      "retrieved_ids": [
+        "POL-12",
+        "SUP-441",
+        "KB-208"
+      ],
+      "expected_document": "KB-208",
+      "precision_at_3": 0.3333333333333333,
+      "ndcg_at_3": 0.5,
+      "reciprocal_rank": 0.3333333333333333
+    },
+    {
+      "query": "human approval account manager follow-up",
+      "hit_at_3": true,
+      "retrieved_ids": [
+        "POL-12"
+      ],
+      "expected_document": "POL-12",
+      "precision_at_3": 0.3333333333333333,
+      "ndcg_at_3": 1.0,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "query": "429 retry quota",
+      "hit_at_3": true,
+      "retrieved_ids": [
+        "KB-301",
+        "KB-208"
+      ],
+      "expected_document": "KB-301",
+      "precision_at_3": 0.3333333333333333,
+      "ndcg_at_3": 1.0,
+      "reciprocal_rank": 1.0
+    }
+  ],
+  "hit_rate_at_3": 1.0,
+  "mrr_at_3": 0.9047619047619048,
+  "note": "Small synthetic regression set; requires independent human review and expansion."
+}

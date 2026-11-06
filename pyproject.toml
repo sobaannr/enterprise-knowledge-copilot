@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enterprise-knowledge-copilot"
+version = "0.1.0"
+description = "Evidence-backed incident follow-up with human approval and atomic execution"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1", "uvicorn[standard]>=0.34,<1", "sqlalchemy>=2.0.36,<3",
+  "pydantic-settings>=2.7,<3", "langgraph>=1.0,<2", "httpx>=0.28,<1",
+  "psycopg[binary]>=3.2,<4", "opensearch-py>=2.8,<4", "mcp>=1.12,<2",
+  "faiss-cpu>=1.10,<2", "numpy>=1.26,<3", "pdfplumber>=0.11,<1"
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.3,<10", "ruff>=0.9,<1"]
+retrieval = ["sentence-transformers>=3.4,<6"]
+pdf = ["pytesseract>=0.3.13,<1"]
+
+[project.scripts]
+copilot = "copilot.cli:main"
+copilot-mcp = "copilot.mcp_server:main"
+
+[tool.setuptools.packages.find]
+include = ["copilot*"]
+
+[tool.setuptools.package-data]
+copilot = ["static/*", "data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

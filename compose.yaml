@@ -1,0 +1,35 @@
+services:
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      COPILOT_DATABASE_URL: postgresql+psycopg://copilot:${POSTGRES_PASSWORD:-local-demo-password}@postgres:5432/copilot
+      COPILOT_ADMIN_TOKEN: ${COPILOT_ADMIN_TOKEN:-demo-admin-change-me}
+      COPILOT_READER_TOKEN: ${COPILOT_READER_TOKEN:-demo-reader-change-me}
+      COPILOT_SEED_DEMO: "true"
+      COPILOT_RETRIEVAL_BACKEND: ${COPILOT_RETRIEVAL_BACKEND:-gemini}
+      COPILOT_GENERATION_BACKEND: ${COPILOT_GENERATION_BACKEND:-gemini}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_GENERATION_MODEL: ${GEMINI_GENERATION_MODEL:-gemini-3.8-flash}
+      GEMINI_EMBEDDING_MODEL: ${GEMINI_EMBEDDING_MODEL:-gemini-embedding-001}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: copilot
+      POSTGRES_USER: copilot
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-demo-password}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U copilot -d copilot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+volumes:
+  postgres-data:

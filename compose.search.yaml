@@ -1,0 +1,61 @@
+# docker compose -f compose.yaml -f compose.search.yaml up --build -d
+services:
+  api:
+    build:
+      context: .
+      args:
+        INSTALL_RETRIEVAL: "true"
+    environment:
+      COPILOT_RETRIEVAL_BACKEND: opensearch
+      COPILOT_OPENSEARCH_URL: http://opensearch:9200
+      COPILOT_RERANK: "true"
+      HF_HOME: /home/copilot/.cache/huggingface
+    volumes:
+      - model-cache:/home/copilot/.cache/huggingface
+    depends_on:
+      indexer:
+        condition: service_completed_successfully
+  indexer:
+    build:
+      context: .
+      args:
+        INSTALL_RETRIEVAL: "true"
+    command: ["sh", "-c", "copilot seed && copilot index"]
+    environment:
+      COPILOT_RETRIEVAL_BACKEND: opensearch
+      COPILOT_DATABASE_URL: postgresql+psycopg://copilot:${POSTGRES_PASSWORD:-local-demo-password}@postgres:5432/copilot
+      COPILOT_OPENSEARCH_URL: http://opensearch:9200
+      HF_HOME: /home/copilot/.cache/huggingface
+    volumes:
+      - model-cache:/home/copilot/.cache/huggingface
+    depends_on:
+      postgres:
+        condition: service_healthy
+      opensearch:
+        condition: service_healthy
+    healthcheck:
+      disable: true
+  opensearch:
+    image: opensearchproject/opensearch:2.19.1
+    environment:
+      discovery.type: single-node
+      DISABLE_INSTALL_DEMO_CONFIG: "true"
+      DISABLE_SECURITY_PLUGIN: "true"
+      OPENSEARCH_JAVA_OPTS: -Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=3s'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+volumes:
+  opensearch-data:
+  model-cache:

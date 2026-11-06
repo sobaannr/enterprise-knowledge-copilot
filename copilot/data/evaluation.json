@@ -1,0 +1,6 @@
+[
+  {"question": "Which enterprise customers were affected by last week's login incident?", "incident": "INC-1042", "customers": ["northstar", "atlas"], "draft_count": 2, "source": "KB-208"},
+  {"question": "Prepare follow-up tickets for INC-1042", "incident": "INC-1042", "customers": ["northstar", "atlas"], "draft_count": 2, "source": "POL-12"},
+  {"question": "What is our office lunch menu?", "incident": null, "customers": [], "draft_count": 0, "source": null},
+  {"question": "Analyze INC-9999", "incident": null, "customers": [], "draft_count": 0, "source": null}
+]

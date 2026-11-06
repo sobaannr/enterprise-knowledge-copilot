@@ -1,0 +1,8 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {"label": "Copilot: setup (Windows)", "type": "shell", "command": "cmd /c setup.cmd", "problemMatcher": []},
+    {"label": "Copilot: test", "type": "process", "command": "${command:python.interpreterPath}", "args": ["-m", "pytest", "-q"], "group": "test", "problemMatcher": []},
+    {"label": "Copilot: check Gemini access", "type": "process", "command": "${command:python.interpreterPath}", "args": ["-m", "copilot.cli", "doctor", "--live"], "problemMatcher": []}
+  ]
+}
